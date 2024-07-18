@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 namespace Player
 {
@@ -33,16 +34,38 @@ namespace Player
 
             if (charecter.isDoubleJump)
             {
+                switch ((byte)charecter.GravityDirection)
+                {
+                    case 0:
+                    {
+                        rb.velocity = new Vector2(rb.velocity.x, -1 * m_jumpAmount);
+                        break;
+                    }
+                    case 1:
+                    {
+                        rb.velocity = new Vector2(-1 * m_jumpAmount, rb.velocity.y);
+                        break;
+                    }
+                    case 2:
+                    {
+                        rb.velocity = new Vector2(rb.velocity.x, m_jumpAmount);
+                        break;
+                    }
+                    case 3:
+                    {
+                        rb.velocity = new Vector2(m_jumpAmount, rb.velocity.y);
+                        break;
+                    }
+                }
                 if (charecter.GravityDirection == GravityDirection.Down) {
                     rb.velocity = new Vector2(rb.velocity.x, m_jumpAmount);
                 }else {
-                    rb.velocity = new Vector2(rb.velocity.x, -1 * m_jumpAmount);
                 }
             }
             DisableTakeWall();
         }
 
-        void DisableTakeWall()
+        private void DisableTakeWall()
         {
             if (!charecter.isJump)
             {
@@ -51,6 +74,52 @@ namespace Player
             charecter.isDependsWall = false;
             charecter.isJump = false;
             charecter.isGround = false;
+        }
+
+        private void LaserJump(Vector2 direction, bool jump = true)
+        {
+            if(!jump) return;
+
+            rb.velocity = Vector2.zero;
+            
+            rb.AddForce(direction, ForceMode2D.Impulse);
+            
+            /*
+            switch (direction)
+            {
+                case 0:
+                {
+                    rb.velocity = new Vector2(0, m_gravityJump*-1);
+                    break;
+                }
+                case 1:
+                {
+                    rb.velocity = new Vector2( m_gravityJump, 0);
+                    break;
+                }
+                case 2:
+                {
+                    rb.velocity = new Vector2(0, m_gravityJump);
+                    break;
+                }
+                case 3:
+                {
+                    rb.velocity = new Vector2(m_gravityJump*-1, 0);
+                    break;
+                }
+            }
+            */
+        }
+
+        
+        private void OnEnable()
+        {
+            EventBus.OnLaserMove += LaserJump;
+        }
+        
+        private void OnDisable()
+        {
+            EventBus.OnLaserMove -= LaserJump;
         }
     }
 }

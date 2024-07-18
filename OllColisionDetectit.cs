@@ -35,8 +35,7 @@ namespace Player
         
         [SerializeField] private LayerMask m_takeWallLayer;
         private int _takeWallLayer;
-
-        private bool _takeWall;
+        
         
         
         protected override void Initialization() => base.Initialization();
@@ -94,11 +93,11 @@ namespace Player
                 EnableTakeWall();
                 rb.gravityScale = 0;
                 rb.velocity = Vector2.zero;
-                _takeWall = true;
+                
             }
             else {
                 DisableTakeWall();
-                _takeWall = false;
+                
             }
         }
         

@@ -5,12 +5,13 @@ namespace Player
 {
     public class PlayerDash : Charecter
     {
+        [SerializeField] private float m_timeDash = 1;
+        
         [SerializeField] private float m_dashDistance;
         [SerializeField] private float _transform;
 
 
-        bool _dash = true;
-        public bool Dash => _dash;
+        private bool _dash = true;
         protected override void Initialization() => base.Initialization();
 
         public void StartDash()
@@ -25,24 +26,25 @@ namespace Player
             float currnetTime = 0;
             int rotate = 1;
             
-            if (charecter.Flip)
-            {
+            if (charecter.Flip) {
                 rotate = -1;
-            }
-            else
-            {
+            }else {
                 rotate = 1;
             }
 
             charecter.CurrentAnimationState = "Player_Shift";
             charecter.isDashing = true;
             StartCoroutine(TrueDash());
-            while (currnetTime <= m_dashDistance  && charecter.isDashing && _dash)
+            while (currnetTime <= m_dashDistance && charecter.isDashing && _dash)
             {
                 currnetTime += _transform;
             
                 Vector3 movement = transform.position;
-                movement.x += _transform * rotate;
+                if ((byte)charecter.GravityDirection % 2 == 0) {
+                    movement.x += _transform * rotate;
+                }else {
+                    movement.y += _transform * rotate;
+                }
                 transform.position = movement;
                 
                 yield return new WaitForFixedUpdate();
@@ -54,10 +56,8 @@ namespace Player
 
         IEnumerator TrueDash()
         {
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(m_timeDash);
             _dash = true;
         }
-        
-        
     }
 }

@@ -1,7 +1,7 @@
 public enum GravityDirection
 {
-    Up,
-    Down,
-    Right,
-    Left
+    Up = 0,
+    Right = 1,
+    Down = 2,
+    Left = 3
 }

@@ -1,6 +1,9 @@
 using System;
 using UnityEngine;
 using Player;
+using UnityEngine.UI;
+
+
 public class InputSystem : Charecter
 {
     public bool isMobile;
@@ -8,17 +11,30 @@ public class InputSystem : Charecter
     private PlayerJump _playerJump;
     private PlayerDash _playerDash;
 
+    [SerializeField] private Button m_jump;
+    [SerializeField] private Button m_dash;
+    [SerializeField] private Button m_moveLeft;
+    [SerializeField] private Button m_moveRight;
+
     private void Start()
     {
         _playerJump = GetComponent<PlayerJump>();
         _playerDash = GetComponent<PlayerDash>();
+        DisabledMobileButton(isMobile);
     }
-
+    
     protected override void Initialization() => base.Initialization();
     
+    private void DisabledMobileButton(bool isMobile)
+    {
+        m_moveLeft.gameObject.SetActive(isMobile);
+        m_moveRight.gameObject.SetActive(isMobile);
+        m_dash.gameObject.SetActive(isMobile);
+        m_jump.gameObject.SetActive(isMobile);
+    }
     
 
-    void Update()
+   private void Update()
     {
         if(isMobile) return;
         
@@ -61,7 +77,7 @@ public class InputSystem : Charecter
 
     public void Jump()
     {
-            _playerJump.Jump();
+        _playerJump.Jump();
     }
 
     public void Dash()
@@ -70,9 +86,8 @@ public class InputSystem : Charecter
         {
             return;
         }
-        
         _playerDash.StartDash();
     }
-
-
+    
 }
+

@@ -25,7 +25,6 @@ namespace Player
 
         void Move()
         {
-
             if (charecter.isDashing || charecter.isDependsWall || !charecter.isMove) {
                 return;
             }
@@ -36,10 +35,16 @@ namespace Player
             else if (charecter.NormalSpeed < 0) {
                 _flip.FlipObject(true);
             }
-            
 
             Vector3 playerPos = this.transform.position;
-            playerPos += new Vector3( charecter.NormalSpeed * m_speed * Time.fixedDeltaTime, 0);
+            if (charecter.GravityDirection == GravityDirection.Up || charecter.GravityDirection == GravityDirection.Down)
+            {
+                playerPos += new Vector3( charecter.NormalSpeed * m_speed * Time.fixedDeltaTime, 0);
+            }
+            else
+            {
+                playerPos += new Vector3( 0,charecter.NormalSpeed * m_speed * Time.fixedDeltaTime, 0);
+            } 
             this.transform.position = playerPos;
             
             if (charecter.isGround) {
