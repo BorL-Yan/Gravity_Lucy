@@ -93,149 +93,103 @@ namespace Player
 
         public void AnimationFlying()
         {
-            if(charecter.isDashing || charecter.isGround || charecter.isDependsWall) {return;}
+            if(charecter.isDashing || charecter.isGround || charecter.isDependsWall) return;
 
-            switch ((byte)GravityDirection)
-            {
-                case 0:
-                {
+            switch ((byte)GravityDirection) {
+                case 0: {
                     if (rb.velocity.y > 0.1) {
-                        if (charecter.DoubleJumpAnim)
-                        {
+                        if (charecter.DoubleJumpAnim) {
                             //Debug.Log("Double Jump Animation");
                         }
                         CurrentAnimationState = anim.PLAYER_FLYING_UP;
                     }
-                    else if (rb.velocity.y < -0.1)
+                    else if (rb.velocity.y < -0.1) 
                     {
-                        if (charecter.DoubleJumpAnim)
-                        {
+                        if (charecter.DoubleJumpAnim) {
                             charecter.DoubleJumpAnim = false;
                         }
                         CurrentAnimationState = anim.PLAYER_FLYING_DOWN; ;
                     }
                     break;
                 }
-                case 1:
-                {
+                case 1: {
                     if (rb.velocity.x < -0.1) {
-                        if (charecter.DoubleJumpAnim)
-                        {
+                        if (charecter.DoubleJumpAnim) {
                             //Debug.Log("Double Jump Animation");
                         }
                         CurrentAnimationState = anim.PLAYER_FLYING_UP;
                     }
                     else if (rb.velocity.x > 0.1)
                     {
-                        if (charecter.DoubleJumpAnim)
-                        {
+                        if (charecter.DoubleJumpAnim) {
                             charecter.DoubleJumpAnim = false;
                         }
                         CurrentAnimationState = anim.PLAYER_FLYING_DOWN; ;
                     }
                     break;
                 }
-                case 2:
-                {
+                case 2: {
                     if (rb.velocity.y < -0.1) {
-                        if (charecter.DoubleJumpAnim)
-                        {
+                        if (charecter.DoubleJumpAnim) {
                             //Debug.Log("Double Jump Animation");
                         }
                         CurrentAnimationState = anim.PLAYER_FLYING_UP;
                     }
                     else if (rb.velocity.y > 0.1)
                     {
-                        if (charecter.DoubleJumpAnim)
-                        {
+                        if (charecter.DoubleJumpAnim) {
                             charecter.DoubleJumpAnim = false;
                         }
                         CurrentAnimationState = anim.PLAYER_FLYING_DOWN; ;
                     }
                     break;
                 }
-                case 3:
-                {
+                case 3: {
                     if (rb.velocity.x > 0.1) {
-                        if (charecter.DoubleJumpAnim)
-                        {
+                        if (charecter.DoubleJumpAnim) {
                             //Debug.Log("Double Jump Animation");
                         }
                         CurrentAnimationState = anim.PLAYER_FLYING_UP;
                     }
-                    else if (rb.velocity.x < -0.1)
+                    else if (rb.velocity.x < -0.1) 
                     {
-                        if (charecter.DoubleJumpAnim)
-                        {
+                        if (charecter.DoubleJumpAnim) {
                             charecter.DoubleJumpAnim = false;
                         }
                         CurrentAnimationState = anim.PLAYER_FLYING_DOWN; ;
                     }
                     break;
-                }
-            }
-            
-            if (GravityDirection == GravityDirection.Down) {
-                if (rb.velocity.y > 0.1) {
-                    if (charecter.DoubleJumpAnim)
-                    {
-                        //Debug.Log("Double Jump Animation");
-                    }
-                    CurrentAnimationState = anim.PLAYER_FLYING_UP;
-                }
-                else if (rb.velocity.y < -0.1)
-                {
-                    if (charecter.DoubleJumpAnim)
-                    {
-                        charecter.DoubleJumpAnim = false;
-                    }
-                    CurrentAnimationState = anim.PLAYER_FLYING_DOWN; ;
-                }
-            }
-            else if (GravityDirection == GravityDirection.Up) {
-                if (rb.velocity.y < -0.1) {
-                    CurrentAnimationState = anim.PLAYER_FLYING_UP;
-                }
-                else if (rb.velocity.y > 0.1) {
-                    CurrentAnimationState = anim.PLAYER_FLYING_DOWN;
                 }
             }
         }
 
         private void GravityDirectionChange(byte direction)
         {
-            switch (direction)
-            {
-                case 0:
-                {
+            switch (direction) {
+                case 0: {
                     GravityDirection = GravityDirection.Up;
                     break;
                 }
-                case 1:
-                {
+                case 1: {
                     GravityDirection = GravityDirection.Right;
                     break;
                 }
-                case 2:
-                {
+                case 2: {
                     GravityDirection = GravityDirection.Down;
                     break;
                 }
-                case 3:
-                {
+                case 3: {
                     GravityDirection = GravityDirection.Left;
                     break;
                 }
             }
         }
             
-        private void OnEnable()
-        {
+        private void OnEnable() {
             EventBus.GravityDirection += GravityDirectionChange;
         }
 
-        private void OnDisable()
-        {
+        private void OnDisable() {
             EventBus.GravityDirection -= GravityDirectionChange;
         }
     }
