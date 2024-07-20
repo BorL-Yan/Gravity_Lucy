@@ -37,13 +37,14 @@ namespace Player
         private int _takeWallLayer;
         
         
-        
         protected override void Initialization() => base.Initialization();
 
         private void Start()
         {
             _groundLayer = m_groundLayer;
             _takeWallLayer = m_takeWallLayer;
+            
+            rb.gravityScale = m_gravityScale;
         }
 
         public void GroundCollision()
@@ -73,20 +74,8 @@ namespace Player
         
         public void TakeToWallCollision()
         {
-            if (charecter.GravityDirection == GravityDirection.Down) {
-                if (charecter.isGround || rb.velocity.y > 0) {
-                    rb.gravityScale = m_gravityScale;
-                    charecter.isDependsWall = false;
-                    return;
-                }
-            }
-            else {
-                if (charecter.isGround || rb.velocity.y < 0) {
-                    charecter.isDependsWall = false;
-                    rb.gravityScale = m_gravityScale;
-                    return;
-                }
-            }
+            
+            if(!WhaterToContinue()) return;
             
             
             if(Physics2D.OverlapBox(m_rayWallTake.position, m_wallTakeBox, 0, _takeWallLayer)) {
@@ -97,8 +86,52 @@ namespace Player
             }
             else {
                 DisableTakeWall();
-                
             }
+        }
+
+        private bool WhaterToContinue()
+        {
+            switch ((byte)charecter.GravityDirection)
+            {
+                case 0:
+                {
+                    if (charecter.isGround || rb.velocity.y < 0) {
+                        charecter.isDependsWall = false;
+                        rb.gravityScale = m_gravityScale;
+                        return false;
+                    }
+                    break;
+                }
+                case 1:
+                {
+                    if (charecter.isGround || rb.velocity.x > 0) {
+                        charecter.isDependsWall = false;
+                        rb.gravityScale = m_gravityScale;
+                        return false;
+                    }
+                    break;
+                }
+                case 2:
+                {
+                    if (charecter.isGround || rb.velocity.y > 0) {
+                        charecter.isDependsWall = false;
+                        rb.gravityScale = m_gravityScale;
+                        return false;
+                    }
+                    break;
+                }
+                case 3:
+                {
+                    if (charecter.isGround || rb.velocity.x < 0) {
+                        charecter.isDependsWall = false;
+                        rb.gravityScale = m_gravityScale;
+                        return false;
+                    }
+                    break;
+                }
+            }
+            // Dose not MATTER
+            return true;
         }
         
         public void CharacterBackDetectid()
@@ -139,7 +172,7 @@ namespace Player
         {
             charecter.isDependsWall = true;
             charecter.isMove = false;
-            charecter.isGround= true;
+            charecter.isGround = false;
             charecter.isJump = true;
             charecter.isDoubleJump = true;
             charecter.isDashing = false;

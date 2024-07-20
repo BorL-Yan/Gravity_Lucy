@@ -15,7 +15,7 @@ namespace Player
         #region Data
         
         public GravityDirection GravityDirection { get; set; }
-        public float NormalSpeed { get; set; }
+        public sbyte NormalSpeed { get; set; }
         
         public bool isMove { get; set; }
         public bool isGround { get; set; }
@@ -97,13 +97,13 @@ namespace Player
 
             switch ((byte)GravityDirection) {
                 case 0: {
-                    if (rb.velocity.y > 0.1) {
+                    if (rb.velocity.y < -0.1) {
                         if (charecter.DoubleJumpAnim) {
                             //Debug.Log("Double Jump Animation");
                         }
                         CurrentAnimationState = anim.PLAYER_FLYING_UP;
                     }
-                    else if (rb.velocity.y < -0.1) 
+                    else if (rb.velocity.y > 0.1) 
                     {
                         if (charecter.DoubleJumpAnim) {
                             charecter.DoubleJumpAnim = false;
@@ -129,13 +129,13 @@ namespace Player
                     break;
                 }
                 case 2: {
-                    if (rb.velocity.y < -0.1) {
+                    if (rb.velocity.y > 0.1) {
                         if (charecter.DoubleJumpAnim) {
                             //Debug.Log("Double Jump Animation");
                         }
                         CurrentAnimationState = anim.PLAYER_FLYING_UP;
                     }
-                    else if (rb.velocity.y > 0.1)
+                    else if (rb.velocity.y < -0.1)
                     {
                         if (charecter.DoubleJumpAnim) {
                             charecter.DoubleJumpAnim = false;

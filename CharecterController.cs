@@ -19,11 +19,13 @@ namespace Player
         {
             _playerColisionDetectit.GroundCollision();
             _playerColisionDetectit.TakeToWallCollision();
-            _playerColisionDetectit.CharacterBackDetectid();
+            //_playerColisionDetectit.CharacterBackDetectid();
             _playerColisionDetectit.CharacterFrontDetectid();
+            
             VelocityDownDetectid();
             
             charecter.AnimationFlying();
+            
             charecter.SetAnimation(charecter.CurrentAnimationState);
         }
 

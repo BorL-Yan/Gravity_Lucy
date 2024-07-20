@@ -34,6 +34,7 @@ namespace Player
 
             if (charecter.isDoubleJump)
             {
+                rb.velocity = Vector2.zero;
                 switch ((byte)charecter.GravityDirection)
                 {
                     case 0:
@@ -79,36 +80,10 @@ namespace Player
         private void LaserJump(Vector2 direction, bool jump = true)
         {
             if(!jump) return;
-
+            
             rb.velocity = Vector2.zero;
             
             rb.AddForce(direction, ForceMode2D.Impulse);
-            
-            /*
-            switch (direction)
-            {
-                case 0:
-                {
-                    rb.velocity = new Vector2(0, m_gravityJump*-1);
-                    break;
-                }
-                case 1:
-                {
-                    rb.velocity = new Vector2( m_gravityJump, 0);
-                    break;
-                }
-                case 2:
-                {
-                    rb.velocity = new Vector2(0, m_gravityJump);
-                    break;
-                }
-                case 3:
-                {
-                    rb.velocity = new Vector2(m_gravityJump*-1, 0);
-                    break;
-                }
-            }
-            */
         }
 
         

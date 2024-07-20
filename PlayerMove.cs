@@ -25,7 +25,8 @@ namespace Player
 
         void Move()
         {
-            if (charecter.isDashing || charecter.isDependsWall || !charecter.isMove) {
+            if (charecter.isDashing || charecter.isDependsWall || !charecter.isMove)
+            {
                 return;
             }
             
@@ -48,7 +49,7 @@ namespace Player
             this.transform.position = playerPos;
             
             if (charecter.isGround) {
-                if (Mathf.Abs(charecter.NormalSpeed) >= 0.15f) {
+                if (Mathf.Abs(charecter.NormalSpeed) >= 0.15f && !charecter.isDependsWall) {
                     charecter.CurrentAnimationState = anim.PLAYER_RUN;
                 }
                 else {
